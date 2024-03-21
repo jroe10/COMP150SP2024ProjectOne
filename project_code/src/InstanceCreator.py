@@ -1,7 +1,7 @@
 # InstanceCreator.py
-from project_code.src.User import User
-from project_code.src.UserFactory import UserFactory
-from project_code.src.UserInputParser import UserInputParser
+from COMP150SP2024ProjectOne.project_code.src.User import User
+from UserFactory import UserFactory
+from UserInputParser import UserInputParser
 
 
 class InstanceCreator:
