@@ -7,11 +7,11 @@ class Event:
         self.failure_outcome = failure_outcome
 
 event1 = Event(
-    name="Gathering Allies",
-    requirements="Convince various factions and kingdoms to join forces against the Demon King.",
-    success_outcome="The heroes successfully unite all factions and kingdoms, forming a powerful coalition.",
-    partial_success_outcome="Some factions join the alliance, but others remain skeptical or refuse to cooperate fully.",
-    failure_outcome="The heroes fail to convince any significant factions to join their cause, weakening their chances against the Demon King."
+    name="Encountering enemy (slime)",
+    requirements="Encounter slime",
+    success_outcome="",
+    partial_success_outcome="",
+    failure_outcome=""
 )
 
 
