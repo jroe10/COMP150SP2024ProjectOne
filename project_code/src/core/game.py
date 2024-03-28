@@ -15,7 +15,7 @@ def game():
             print('Great to hear it!')
             print('You are going to need some armor in case you have to battle anyone')
             inventory.append('Iron Armor')
-            print('You have your army on and are ready to begin your quest')
+            print('You have your armor on and are ready to begin your quest')
             
             print('There is an individual on the path you are on. He may be dangerous. Do you wish to fight him or run?')
             decide=input('fight? (fight/run)')
