@@ -28,7 +28,7 @@ class Character:
         self.spirit = Statistic()
 
     def _generate_name(self):
-        names = ['Jen', 'Phoebe', Therese', 'Larry', 'Arjun']
+        names = ['Jen', 'Phoebe', 'Therese', 'Larry', 'Arjun']
         return random.choice(names)
 
 class Statistic:
