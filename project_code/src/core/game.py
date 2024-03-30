@@ -1,5 +1,6 @@
 import random
-from character import Character 
+from character import Character
+from location import Location
 
 def game():
     answer = input('Would you like to play the game? (y/n) ')
@@ -9,6 +10,7 @@ def game():
         inventory = []
         state = 'start'
         player_character = None 
+        current_location = None
 
         while state != 'end':
             if state == 'start':
@@ -23,7 +25,11 @@ def game():
                     print('You have your armor on and are ready to begin your quest')
                     
                     player_character = Character() 
-                    print(f"You have been aswsigned the character {player_character.name}!")
+                    print(f"You have been assigned the character {player_character.name}!")
+                    
+                    # Set the initial location for the player
+                    current_location = Location(name="Starting Point", description="You are at the starting point of your journey.")
+                    print(f"You are currently at: {current_location.name.get()} - {current_location.description.get()}")
                     
                     state = 'journey'
                 else:

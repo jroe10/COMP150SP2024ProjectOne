@@ -15,7 +15,7 @@ class Character:
         - Willpower: How quickly or effectively the character can overcome natural urges. How susceptible they are to mind control.
         - Spirit: Catchall for the ability to perform otherworldly acts. High spirit is rare. Different skills have different resource pools they might use like mana, stamina, etc. These are unaffected by spirit. Instead, spirit is a measure of how hard it is to learn new otherworldly skills and/or master general skills.
         """
-        self.name = self._generate_name() if name is None else name
+        self.name = name if name else self._generate_name()
         self.strength = Statistic()
         self.dexterity = Statistic()
         self.constitution = Statistic()
