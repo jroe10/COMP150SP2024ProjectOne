@@ -2,6 +2,8 @@ import random
 from character import Character
 from location import Location
 
+starting_locations = ['Damen Student Center', 'Information Commons', 'Mundelien', 'Maddona della Strada', 'Metropolis Cafe']
+
 def game():
     answer = input('Would you like to play the game? (y/n) ')
 
@@ -10,73 +12,93 @@ def game():
         inventory = []
         state = 'start'
         player_character = None 
-        current_location = None
+        starting_location = random.choice(starting_locations)  # Randomly choose a starting location
 
         while state != 'end':
             if state == 'start':
+                print(f'You are currently at: {starting_location} - You are at the starting point of your journey.')
                 print('Hello there! Welcome to the world of Comp150!')
-                print('You are a student in this class, and you have to go on a quest to destroy the evil dragon!')
+                player_character = Character() 
+                print(f"You have been assigned the character {player_character.name}!") 
+                print('You are a student in this class, and you have to go on a quest to destroy the evil dragon.')
+               
 
                 choice = input('Do you accept this challenge? (y/n) ')
                 if choice.lower() == 'y':
                     print('Great to hear it!')
-                    print('You are going to need some armor in case you have to battle anyone')
+                    print('You are going to need some armor in case you have to battle anyone.')
                     inventory.append('Iron Armor')
-                    print('You have your armor on and are ready to begin your quest')
-                    
-                    player_character = Character() 
-                    print(f"You have been assigned the character {player_character.name}!")
-                    
-                    # Set the initial location for the player
-                    current_location = Location(name="Starting Point", description="You are at the starting point of your journey.")
-                    print(f"You are currently at: {current_location.name.get()} - {current_location.description.get()}")
-                    
+                    print('You have your armor on and are ready to begin your quest.')
+                
                     state = 'journey'
                 else:
-                    print('I understand that a quest is intimidating')
+                    print('I understand that a quest is intimidating.')
                     print('How about you get a computer and work from behind the scenes?')
                     inventory.append('Computer')
-                    print('You can help your partner who is on the field from the safety of Mundy room 414')
+                    print('You can help your partner who is on the field from the safety of Mundy room 414.')
                     state = 'rescue'
-
+                    
             elif state == 'journey':
-                print('You are on your way to find the dragon...')
-                print('Suddenly, you encounter a fork in the road.')
-                fork_choice = input('Which path will you take? (left/right) ').lower()
-                if fork_choice == 'left':
-                    print('You chose the left path.')
-                    print('As you venture deeper, you stumble upon a treasure chest.')
-                    loot_choice = input('Do you open the chest? (y/n) ').lower()
-                    if loot_choice == 'y':
-                        print('You open the chest and find a shiny sword!')
-                        inventory.append('Shiny Sword')
-                        print('You take the sword and continue your journey.')
-                    else:
-                        print('You decide not to risk it and continue on your way.')
-                elif fork_choice == 'right':
-                    print('You chose the right path.')
-                    print('You encounter a group of goblins blocking your way.')
-                    action = input('Do you fight or try to sneak past? (fight/sneak) ').lower()
+                print('You set out on your journey, determined to find and defeat the evil dragon.')
+                print('Along the way, you encounter various challenges and obstacles.')
+                print('Your path is fraught with danger, but also opportunities for glory and treasure.')
+                
+                # Simulate a random encounter
+                encounter_chance = random.randint(1, 10)
+                if encounter_chance <= 5:  # 50% chance of encountering an enemy
+                    print('Oh no! You encounter a fearsome enemy blocking your path!')
+                    print('What will you do?')
+                    action = input('Fight or flee? (fight/flee) ').lower()
                     if action == 'fight':
-                        print('You engage in a fierce battle with the goblins!')
-                        print('After a tough fight, you emerge victorious.')
-                        inventory.append('Goblin Ears')
-                        print('You collect the goblin ears as trophies and continue your journey.')
-                    elif action == 'sneak':
-                        print('You attempt to sneak past the goblins...')
-                        print('Unfortunately, one of the goblins spots you!')
-                        decision = input('Will you fight? (y/n) ').lower()
-                        if decision == 'y':
-                            print('You engage in battle!')
-                            # Continue the battle logic here
-                        else:
-                            print('You attempt to flee!')
-                            # Implement the fleeing logic here
+                        print('You engage in battle with the enemy!')
+                        # Implement battle logic here
+                        print('After a fierce battle, you emerge victorious!')
+                        inventory.append('Enemy Loot')  # Add loot to inventory
+                    elif action == 'flee':
+                        print('You attempt to flee from the enemy!')
+                        # Implement fleeing logic here
+                        print('You manage to escape from the enemy and continue your journey.')
                     else:
-                        print('Invalid choice!')
+                        print('Invalid choice! The enemy attacks while you hesitate!')
+                        # Implement default action or penalty for invalid choice
+                        print('You must fight!')
+                        # Implement battle logic here
+                        print('After a tough fight, you emerge victorious!')
+                        inventory.append('Enemy Loot')  # Add loot to inventory
                 else:
-                    print('Invalid choice!')
-                state = 'challenge'  # Transition to the challenge phase after completing the journey
+                    print('You continue your journey without any interruptions.')
+
+                # You can add more encounters, choices, and challenges here
+                print('You are on your way to find the dragon...')
+                print('Choose your path:')
+                print('1. Explore the forest')
+                print('2. Investigate the castle ruins')
+                print('3. Visit the nearby village')
+                path_choice = input('Enter the number corresponding to your choice: ')
+                if path_choice == '1':
+                    print('You choose to explore the forest.')
+                    # Implement forest exploration logic
+                    # After completing forest exploration, transition to the next phase or location
+                    state = 'next_phase_or_location'
+                elif path_choice == '2':
+                    print('You choose to investigate the castle ruins.')
+                    print('You explore the ancient ruins, uncovering forgotten secrets and facing ancient guardians.')
+                    print('You have successfully completed the first leg of your journey.')
+                    print('You feel stronger and more determined than ever to face whatever lies ahead.')
+                    # After completing castle ruins investigation, continue the game loop
+                    state = 'next_phase_or_location'
+                elif path_choice == '3':
+                    print('You choose to visit the nearby village.')
+                    # Implement village visit logic
+                    # After completing village visit, transition to the next phase or location
+                    state = 'next_phase_or_location'
+                else:
+                    print('Invalid choice! Please enter a number between 1 and 3.')
+
+
+                print('You have successfully completed the first leg of your journey.')
+                print('You feel stronger and more determined than ever to face whatever lies ahead.')
+                state = 'next_phase_or_location'  # For now, we'll end the game after completing the journey
 
             elif state == 'rescue':
                 print('As you sit behind your computer, you receive a distress call from your partner.')
