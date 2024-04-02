@@ -1,38 +1,63 @@
-import unittest
-from unittest.mock import MagicMock
-from project_code.src.core.pycache.InstanceCreator import InstanceCreator
-from project_code.src.UserFactory import UserFactory
-from project_code.src.UserInputParser import UserInputParser
-from project_code.src.User import User
-
 class TestInstanceCreator(unittest.TestCase):
-    def setUp(self):
-        self.mock_user_factory = MagicMock(spec=UserFactory)
-        self.mock_parser = MagicMock(spec=UserInputParser)
-        self.instance_creator = InstanceCreator(self.mock_user_factory, self.mock_parser)
+    def test_new_user_or_login(self):
+        creator = InstanceCreator()
+        
+        # Test creating a new user
+        user1 = creator._new_user_or_login()
+        self.assertIsInstance(user1, User)
+        
+        # Test login with existing user
+        user2 = creator._new_user_or_login()
+        self.assertIsInstance(user2, User)
 
-    def test_get_user_info_yes_creates_new_user(self):
-        # Prepare the mock objects
-        self.mock_parser.parse.return_value = "new"  # Simulate the response for creating a new user
-        mock_user = MagicMock(spec=User)
-        self.mock_user_factory.create_user.return_value = mock_user
+    def test_get_user_info(self):
+        creator = InstanceCreator()
+        
+        # Test affirmative response
+        user = creator.get_user_info("yes")
+        self.assertIsInstance(user, User)
+        
+        # Test negative response
+        self.assertIsNone(creator.get_user_info("no"))
 
-        # Execute the method under test
-        user = self.instance_creator.get_user_info("yes")
+    @patch('project_code.src.core.instancecreator.database')
+    def test_load_user(self, mock_database):
+        creator = InstanceCreator()
+        
+        # Test loading existing user
+        user = creator._load_user()
+        self.assertIsInstance(user, User)
+        
+        # Test loading non-existing user (mocking database)
+        # Assuming get_user_data returns None for non-existing user
+        mock_database.get_user_data.return_value = None
+        self.assertIsNone(creator._load_user())
 
-        # Verify the results
-        self.mock_parser.parse.assert_called_once_with("Create a new username or login to an existing account?")
-        self.mock_user_factory.create_user.assert_called_once_with(self.mock_parser)
-        self.assertEqual(user, mock_user, "The method should return a new user object")
+class TestUser(unittest.TestCase):
+    def test_login(self):
+        # Test valid login
+        user = User("test_user", "test_password")
+        self.assertTrue(user.login("test_user", "test_password"))
+        
+        # Test invalid login
+        self.assertFalse(user.login("test_user", "wrong_password"))
 
-    def test_get_user_info_no_returns_none(self):
-        # Execute the method under test with a response that should not create a user
-        user = self.instance_creator.get_user_info("no")
+    def test_logout(self):
+        user = User("test_user", "test_password")
+        user.logout()
+        self.assertFalse(user.logged_in)  # Assuming User has a 'logged_in' attribute
 
-        # Verify the results
-        self.assertIsNone(user, "The method should return None for a 'no' response")
-
-    # You can add more tests to cover other scenarios, such as handling login
+    def test_update_profile(self):
+        user = User("test_user", "test_password")
+        
+        # Test updating existing attribute
+        user.update_profile({'username': 'new_username'})
+        self.assertEqual(user.username, 'new_username')
+        
+        # Test updating non-existing attribute
+        with patch('builtins.print') as mock_print:
+            user.update_profile({'invalid_attr': 'value'})
+            mock_print.assert_called_with("Attribute 'invalid_attr' does not exist in the user profile.")
 
 if __name__ == '__main__':
     unittest.main()
