@@ -9,3 +9,5 @@ A few of the COMP 150 classmates go on an adventure to battle the dragon thats t
 
 # HOW TO PLAY
 Go to game.py and press play. Answer the yes/no question and begin your journey.
+
+# ERRORS
